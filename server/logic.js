@@ -39,3 +39,30 @@ for (let index = 0; index < items; index++) {
 
 
 console.log(matrix)
+
+const getDividers = num => {
+  const mul = num * 2;
+  const dividers = [];
+  let rightDivider = num;
+
+  for (let index = 3; index < rightDivider; index++) {
+    if (mul % index === 0) {
+      rightDivider = mul / index;
+      dividers.push({ x: index, y: rightDivider })
+    }
+  }
+
+  return dividers;
+}
+
+const getBoardDimentions = num => {
+  const dividers = getDividers(num);
+  if (dividers.length === 0) {
+    //throw new Error('Number is not dividing well');
+    console.error(`${num} is not dividing well`);
+    return null;
+  }
+
+  const closestDividers = dividers[dividers.length - 1];
+  return ({...closestDividers});
+}

@@ -4,11 +4,13 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpack = require('webpack');
 const webpackConfig = require('../webpack.config.js');
 const app = express();
+const bodyParser = require('body-parser');
 
 const compiler = webpack(webpackConfig);
 
-console.log(path.resolve(__dirname, '../dist'));
 app.use(express.static(path.resolve(__dirname, '../dist')));
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use(webpackDevMiddleware(compiler, {
   hot: true,
@@ -22,6 +24,16 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.get('/', function (req, res) {
   res.send('hello world')
+});
+
+app.get('/games/:id/start', function(req, res) {
+    const { id } = req.params;
+    res.send(`start game (${id})`);
+});
+
+app.post('/games', (req, res) => {
+    console.log(req.body.id);
+    res.send('ok');
 });
 
 const server = app.listen(3000, function() {
