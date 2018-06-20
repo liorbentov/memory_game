@@ -62,3 +62,6 @@ typings/
 
 # webpack artifacts
 dist/
+
+# mongodb
+data/db/

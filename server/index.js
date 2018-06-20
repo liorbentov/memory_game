@@ -6,6 +6,8 @@ const webpackConfig = require('../webpack.config.js');
 const app = express();
 const bodyParser = require('body-parser');
 
+const db = require('./db.js');
+
 const compiler = webpack(webpackConfig);
 
 app.use(express.static(path.resolve(__dirname, '../dist')));
@@ -22,13 +24,13 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
-app.get('/', function (req, res) {
-  res.send('hello world')
-});
-
 app.get('/games/:id/start', function(req, res) {
     const { id } = req.params;
     res.send(`start game (${id})`);
+});
+
+app.get('/games', (req, res) => {
+  db.getGames().then(values => res.send(values));
 });
 
 app.post('/games', (req, res) => {
