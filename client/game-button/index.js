@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import Styles from './styles.css';
 
 class GameButton extends Component {
 	constructor(props) {
@@ -13,13 +16,23 @@ class GameButton extends Component {
 	}
 
 	render() {
-		return <button onClick={this.handleClick}>{this.props.name}</button>;
+		return (
+			<button className={classNames(Styles.gameButton)} onClick={this.handleClick}>
+				{this.props.name}
+				{this.props.description}
+			</button>
+		);
 	}
 }
 
 GameButton.propType = {
+	description: PropTypes.string,
 	id: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
+	size: PropTypes.shape({
+		rows: PropTypes.number.isRequired,
+		columns: PropTypes.number.isRequired,
+	})
 };
 
 export default GameButton;

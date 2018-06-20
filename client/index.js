@@ -11,11 +11,11 @@ class App extends React.Component {
 			<div>
 			<h1>
 				bla
+			</h1>
 				<nav>
 				  <Link to="/">Home</Link>{" "}
 				  <Link to="list">Dashboard</Link>
-				</nav>
-			</h1>
+			</nav>
 			<Router>
 			  <Home path="/" />
 			  <GamesList path="/list" />

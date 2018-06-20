@@ -17,7 +17,6 @@ export default class GamesList extends React.Component {
 		fetch('http://localhost:3000/games')
 			.then(data => data.json())
 			.then(games => {
-				console.log(games);
 				this.setState({ games, isLoading: false });
 			})
 			.catch(() => {
@@ -33,7 +32,7 @@ export default class GamesList extends React.Component {
 		}
 
 		return (
-			<div>{games.map(({ _id, name }) => <GameButton id={_id} name={name} />)}</div>
+			<div>{games.map(game => <GameButton id={game._id} {...game} />)}</div>
 		); 
 	}
 }

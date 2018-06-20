@@ -38,6 +38,10 @@ app.post('/games', (req, res) => {
     res.send('ok');
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
 const server = app.listen(3000, function() {
   const host = server.address().address;
   const port = server.address().port;
