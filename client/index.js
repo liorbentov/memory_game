@@ -2,8 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link, Router } from "@reach/router"
 
-import GamesList from './games';
+import GamesList from './games-list';
 import Home from './home';
+
+const Game = props => {
+	return `Game: ${props.id}`;
+}
+
+const GamesIndex = () => {
+	return "Index";
+}
 
 class App extends React.Component {
 	render() {
@@ -14,11 +22,14 @@ class App extends React.Component {
 			</h1>
 				<nav>
 				  <Link to="/">Home</Link>{" "}
-				  <Link to="list">Dashboard</Link>
+				  <Link to="games">Games</Link>
 			</nav>
 			<Router>
 			  <Home path="/" />
-			  <GamesList path="/list" />
+			  <GamesList path="games">
+			  	<GamesIndex path="/" />
+			  	<Game path=":id" />
+			  </GamesList>
 			</Router>
 			</div>
 		)

@@ -1,6 +1,15 @@
 import React from 'react';
+import { Router } from "@reach/router"
 
 import GameButton from '../game-button';
+
+const Game = props => {
+	return `Game: ${props.id}`;
+};
+
+const List = ({games}) => {
+	return games.map(game => <GameButton key={game._id} id={game._id} {...game} />);
+};
 
 export default class GamesList extends React.Component {
 	constructor(props) {
@@ -32,7 +41,12 @@ export default class GamesList extends React.Component {
 		}
 
 		return (
-			<div>{games.map(game => <GameButton id={game._id} {...game} />)}</div>
+			<div>
+				<Router>
+					<List path="/" games={games} />
+					<Game path=":id" />
+				</Router>
+			</div>
 		); 
 	}
 }
