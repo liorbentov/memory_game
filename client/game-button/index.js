@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Link } from "@reach/router"
 
-import Styles from './styles.css';
+import Styles from './style.css';
 
 class GameButton extends Component {
 	constructor(props) {

@@ -2,9 +2,15 @@ import React from 'react';
 import { Router } from "@reach/router"
 
 import GameButton from '../game-button';
+import Board from '../board';
 
 const Game = props => {
-	return `Game: ${props.id}`;
+	return (
+		<div>
+			{ `Game: ${props.id}` }
+			<Board size={{ rows: 4, columns: 5 }} />
+		</div>
+	);
 };
 
 const List = ({ games }) => {
