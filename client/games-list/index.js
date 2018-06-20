@@ -7,7 +7,7 @@ const Game = props => {
 	return `Game: ${props.id}`;
 };
 
-const List = ({games}) => {
+const List = ({ games }) => {
 	return games.map(game => <GameButton key={game._id} id={game._id} {...game} />);
 };
 
@@ -23,13 +23,12 @@ export default class GamesList extends React.Component {
 
 	fetchGames() {
 		this.setState({ isLoading: true });
-		fetch('http://localhost:3000/games')
+		fetch('http://localhost:3000/api/games')
 			.then(data => data.json())
 			.then(games => {
 				this.setState({ games, isLoading: false });
 			})
 			.catch(() => {
-				console.log("Error!");
 				this.setState({ isLoading: false });
 			})
 	}
@@ -41,12 +40,10 @@ export default class GamesList extends React.Component {
 		}
 
 		return (
-			<div>
-				<Router>
-					<List path="/" games={games} />
-					<Game path=":id" />
-				</Router>
-			</div>
-		); 
+			<Router>
+				<List path="/" games={games} />
+				<Game path=":id" />
+			</Router>
+		); 	
 	}
 }

@@ -6,19 +6,15 @@ import GamesList from './games-list';
 import Home from './home';
 
 const Game = props => {
-	return `Game: ${props.id}`;
-}
-
-const GamesIndex = () => {
-	return "Index";
-}
+	return props.children;
+};
 
 class App extends React.Component {
 	render() {
 		return (
 			<div>
 			<h1>
-				bla
+				Memory Game
 			</h1>
 				<nav>
 				  <Link to="/">Home</Link>{" "}
@@ -27,7 +23,6 @@ class App extends React.Component {
 			<Router>
 			  <Home path="/" />
 			  <GamesList path="games">
-			  	<GamesIndex path="/" />
 			  	<Game path=":id" />
 			  </GamesList>
 			</Router>

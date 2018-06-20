@@ -24,16 +24,16 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
-app.get('/games/:id/start', function(req, res) {
+app.get('/api/games/:id/start', function(req, res) {
     const { id } = req.params;
     res.send(`start game (${id})`);
 });
 
-app.get('/games', (req, res) => {
+app.get('/api/games', (req, res) => {
   db.getGames().then(values => res.send(values));
 });
 
-app.post('/games', (req, res) => {
+app.post('/api/games', (req, res) => {
     console.log(req.body.id);
     res.send('ok');
 });
