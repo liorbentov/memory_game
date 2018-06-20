@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import GameButton from './game-button';
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -32,7 +34,7 @@ class App extends React.Component {
 		}
 
 		return (
-			<div>{games.map(({ name }) => name)}</div>
+			<div>{games.map(({ _id, name }) => <GameButton id={_id} name={name} />)}</div>
 		);
 	}
 }
