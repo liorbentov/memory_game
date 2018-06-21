@@ -43,6 +43,11 @@ app.get('/api/games/:id/row/:row/col/:col', (req, res) => {
   res.send('ok');
 });
 
+app.post('/api/games/:id/item', (req, res) => {
+  const { row, column } = req.body;
+  res.send(`${matrix[row][column]}`);
+});
+
 app.post('/api/games', (req, res) => {
     console.log(req.body.id);
     res.send('ok');
