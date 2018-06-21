@@ -7,7 +7,6 @@ const DB_NAME = process.env.DB_NAME;
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
-
 const Game = new Schema({
  id: ObjectId,
  name: String,
@@ -18,16 +17,32 @@ const Game = new Schema({
  }
 });
 
+const Item = new Schema ({
+ 	type: String,
+ 	value: String
+});
+
+const GameItemsSchema = new Schema({
+ id: ObjectId,
+ gameId: String,
+ items: [Item]
+});
+
 const connectionString = `mongodb://localhost:${DB_PORT}/${DB_NAME}`;
-// mongoose.connect(`mongodb://localhost:${DB_PORT}/${DB_NAME}`);
 
 const conn = mongoose.createConnection(connectionString);
 const MyModel = conn.model('games', Game);
+const GameItems = conn.model('GameItem', GameItemsSchema, 'gameItems');
 
 const getGames = () => {
 	return MyModel.find();
 }
 
+const getGameItems = id => {
+	return GameItems.findOne({ gameId: id });
+}
+
 module.exports = {
-	getGames
+	getGames,
+	getGameItems
 }

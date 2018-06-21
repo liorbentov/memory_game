@@ -3,10 +3,22 @@ import classNames from 'classnames';
 
 import Styles from './style.css';
 
+const ContentDisplay = ({ className, content }) => {
+	if (!content) {
+		return <span className={className}>Hello</span>;
+	}
+
+	if (content.type === 'text') {
+		return <span className={className}>{content.value}</span>;
+	}
+
+	return <img src={content.value} className={classNames(className, Styles.img)} />;
+};
+
 export default ({ checked, onChange, row, column, data }) => {
 	const handleCheck = () => onChange(row, column);
 
-	const content = checked ? data : 'Hello';
+	// const content = checked ? data : 'Hello';
 	const className = checked ? classNames(Styles.back) : classNames(Styles.front);
 	return (
 		<span className={classNames(Styles['card-container'])}>
@@ -14,9 +26,7 @@ export default ({ checked, onChange, row, column, data }) => {
 				className={classNames(Styles.flipper, { [Styles.flipped] : checked })} 
 				onClick={handleCheck}
 				>
-				<span className={className} >
-					{ content }	 
-				</span>
+				<ContentDisplay content={data} className={className}/>
 			</button>
 		</span>
 	);

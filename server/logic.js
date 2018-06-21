@@ -30,7 +30,7 @@ const putItemInPlace = (matrix, item, dimentions) => {
     }
 
     const { row, col } = getPlaceIndexes(firstPlace, dimentions);
-    matrix[row][col] = item + 1;
+    matrix[row][col] = item;
 };
 
 const initializeMatrix = (rows, columns) => {

@@ -37,7 +37,7 @@ class Game extends React.Component {
 					const newSelected = [...selected,{ row, column, data }];
 					this.setState({ selected: newSelected });
 
-					if (selected[0].data === data) {
+					if (selected[0].data.value === data.value) {
 						this.setState({ opened: [...opened, ...newSelected], selected: [] })
 						return console.log("Match!");
 					}

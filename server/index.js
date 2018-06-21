@@ -37,15 +37,22 @@ app.get('/api/games', (req, res) => {
   db.getGames().then(values => res.send(values));
 });
 
-app.get('/api/games/:id/row/:row/col/:col', (req, res) => {
-  console.log(req.params.id, req.params.row, req.params.col);
-  console.log(matrix[req.params.row][req.params.col]);
-  res.send('ok');
+app.get('/api/games/:id/items', (req, res) => {
+  const { id } = req.params;
+  db.getGameItems(id).then(values => res.send(values));
 });
 
 app.post('/api/games/:id/item', (req, res) => {
   const { row, column } = req.body;
-  res.send(`${matrix[row][column]}`);
+  const itemIndex = matrix[row][column];
+  
+  const { id } = req.params;
+  db.getGameItems(id).then(values => {
+    const item = values.items[itemIndex];
+    res.send(item);
+  });
+
+  // res.send(`${matrix[row][column]}`);
 });
 
 app.post('/api/games', (req, res) => {
