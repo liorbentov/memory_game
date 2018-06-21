@@ -1,10 +1,4 @@
 
-const items = 10;
-let remainingPlaces = items * 2;
-let matrix = new Array(remainingPlaces);
-
-console.log(matrix)
-
 /*
 [ 0,  1,  2,  3,  4,
   5,  6,  7,  8,  9,
@@ -12,33 +6,54 @@ console.log(matrix)
  15, 16, 17, 18, 19 ]
 */
 
+const getPlaceIndexes = (place, dimentions) => {
+  const row = Math.floor(place / dimentions.y);
+  const col = place - (row * dimentions.y);
+
+  return { row, col };
+};
+
 const pickPlace = places => {
   return Math.floor(Math.random() * places);
 }
 
-const isOpenPlace = (matrix, place) => {
-  return matrix[place] === undefined;
+const isOpenPlace = (matrix, place, dimentions) => {
+  const { row, col } = getPlaceIndexes(place, dimentions);
+  return matrix[row][col] === undefined;
 }
 
-const putItemInPlace = (matrix, item) => {
-    const places = matrix.length;
+const putItemInPlace = (matrix, item, dimentions) => {
+    const places = dimentions.x * dimentions.y;
     let firstPlace = pickPlace(places);
-    while (!isOpenPlace(matrix, firstPlace)) {
+    while (!isOpenPlace(matrix, firstPlace, dimentions)) {
       firstPlace = pickPlace(places);
     }
 
-    matrix[firstPlace] = item;
+    const { row, col } = getPlaceIndexes(firstPlace, dimentions);
+    matrix[row][col] = item;
+};
+
+const initializeMatrix = (rows, columns) => {
+  const matrix = new Array(rows);
+  for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
+      matrix[rowIndex] = new Array(columns);
+  }
+
+  return matrix;
 }
 
-const y = Math.random() * 10;
+const buildMatrix = itemsNumber => {
+  let remainingPlaces = itemsNumber * 2;
+  const dimentions = getBoardDimentions(itemsNumber);
+  let matrix = initializeMatrix(dimentions.x, dimentions.y);
 
-for (let index = 0; index < items; index++) {
-  putItemInPlace(matrix, index);
-  putItemInPlace(matrix, index);
-}
+  for (let index = 0; index < itemsNumber; index++) {
+    putItemInPlace(matrix, index, dimentions);
+    putItemInPlace(matrix, index, dimentions);
+  }
 
-
-console.log(matrix)
+  return matrix;
+};
 
 const getDividers = num => {
   const mul = num * 2;
@@ -53,7 +68,7 @@ const getDividers = num => {
   }
 
   return dividers;
-}
+};
 
 const getBoardDimentions = num => {
   const dividers = getDividers(num);
@@ -65,4 +80,9 @@ const getBoardDimentions = num => {
 
   const closestDividers = dividers[dividers.length - 1];
   return ({...closestDividers});
-}
+};
+
+module.exports = {
+  buildMatrix,
+  getBoardDimentions
+};

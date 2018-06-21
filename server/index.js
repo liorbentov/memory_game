@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const db = require('./db.js');
+const logic = require('./logic.js');
 
 const compiler = webpack(webpackConfig);
 
@@ -24,6 +25,9 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
+const matrix = logic.buildMatrix(10);
+console.log(matrix);
+
 app.get('/api/games/:id/start', function(req, res) {
     const { id } = req.params;
     res.send(`start game (${id})`);
@@ -31,6 +35,12 @@ app.get('/api/games/:id/start', function(req, res) {
 
 app.get('/api/games', (req, res) => {
   db.getGames().then(values => res.send(values));
+});
+
+app.get('/api/games/:id/row/:row/col/:col', (req, res) => {
+  console.log(req.params.id, req.params.row, req.params.col);
+  console.log(matrix[req.params.row][req.params.col]);
+  res.send('ok');
 });
 
 app.post('/api/games', (req, res) => {

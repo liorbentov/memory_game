@@ -8,7 +8,7 @@ class Game extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { selected: [{ row: 1, column: 2 } ]};
+		this.state = { selected: []};
 		this.handlePickCard = this.handlePickCard.bind(this);
 	}
 
