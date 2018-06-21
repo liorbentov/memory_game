@@ -36,7 +36,6 @@ class Game extends React.Component {
 				.then(data => {
 					const newSelected = [...selected,{ row, column, data }];
 					this.setState({ selected: newSelected });
-					console.log(selected[0].data, data);
 
 					if (selected[0].data === data) {
 						this.setState({ opened: [...opened, ...newSelected], selected: [] })
@@ -45,7 +44,7 @@ class Game extends React.Component {
 
 					return window.setTimeout(() => {
 						this.setState({ selected: []})
-					}, 2000);
+					}, 1000);
 				})
 				.catch(() => console.log("error"));
 		}
