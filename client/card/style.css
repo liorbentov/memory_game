@@ -23,7 +23,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  content: 'Hello';
+  content: "Hello";
   display: inline-block;
   visibility: visible;
   width: 100px;
@@ -59,7 +59,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  content: 'Shtuty';
+  content: attr(data-value);
   display: inline-block;
   visibility: visible;
   width: 100px;

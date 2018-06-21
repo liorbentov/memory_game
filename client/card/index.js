@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import Styles from './style.css';
 
-export default ({ checked, onChange, row, column }) => {
+export default ({ checked, onChange, row, column, data }) => {
 	const handleCheck = () => onChange(row, column);
 
 	return (
@@ -11,7 +11,10 @@ export default ({ checked, onChange, row, column }) => {
 			<button 
 				className={classNames(Styles.card, { [Styles.flipped]: checked })} 
 				onClick={handleCheck}
-			/>
+				data-value={data}
+			>
+				Hello
+			</button>
 		</span>
 	);
 }

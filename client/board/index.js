@@ -16,11 +16,15 @@ class Board extends Component {
 			let cards = [];	
 
 			for (let colIndex = 0; colIndex < actualColumns; colIndex++) {
-				const isOpened = openedCards.find(({ row, column }) => {
+				const card = openedCards.find(({ row, column }) => {
 					return colIndex === column && rowIndex === row;
-				})
+				});
 
-				cards.push(<Card 
+				const isOpened = !!card;
+				const data = card ? card.data : '';
+
+				cards.push(<Card
+					data={data} 
 					row={rowIndex} 
 					column={colIndex} 
 					checked={isOpened} 
