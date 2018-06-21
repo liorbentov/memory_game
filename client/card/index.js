@@ -3,10 +3,15 @@ import classNames from 'classnames';
 
 import Styles from './style.css';
 
-export default () => {
+export default ({ checked, onChange, row, column }) => {
+	const handleCheck = () => onChange(row, column);
+
 	return (
 		<span className={classNames(Styles['card-container'])}>
-			<input type="checkbox" className={classNames(Styles.card)} />
+			<button 
+				className={classNames(Styles.card, { [Styles.flipped]: checked })} 
+				onClick={handleCheck}
+			/>
 		</span>
 	);
 }

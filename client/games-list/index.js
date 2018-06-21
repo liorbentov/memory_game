@@ -4,13 +4,39 @@ import { Router } from "@reach/router"
 import GameButton from '../game-button';
 import Board from '../board';
 
-const Game = props => {
-	return (
-		<div>
-			{ `Game: ${props.id}` }
-			<Board size={{ rows: 4, columns: 5 }} />
-		</div>
-	);
+class Game extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = { selected: [{ row: 1, column: 2 } ]};
+		this.handlePickCard = this.handlePickCard.bind(this);
+	}
+
+	handlePickCard(row, column) {
+		const { selected } = this.state;
+		if (selected.length === 1) {
+			this.setState({ selected: [...selected, { row, column }] })
+			return window.setTimeout(() => {
+				this.setState({ selected: []})
+			}, 2000);
+		}
+
+		this.setState({ selected: [...selected, { row, column }]});
+	}
+
+	render() {
+		return (
+			<div>
+				{ `Game: ${this.props.id}` }
+				<Board 
+					size={{ rows: 4, columns: 5 }} 
+					handlePickCard={this.handlePickCard} 
+					selectedCards={this.state.selected}
+					openedCards={[]}
+				/>
+			</div>
+		);
+	}
 };
 
 const List = ({ games }) => {

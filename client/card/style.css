@@ -13,7 +13,7 @@
 	transform-style: preserve-3d;
 }
 
-.card:checked {
+.card.flipped {
   visibility: hidden;
   transition: all 1s;
   transform: rotateY(180deg) translateX(-93px);
@@ -35,12 +35,12 @@
   vertical-align: middle;
 }
 
-.card:checked:before {
+.card.flipped:before {
   opacity: 0;  
   transition: all 1s;
 }
 
-.card:checked:after {
+.card.flipped:after {
   opacity: 1;
   transition: all 1s;
 }
