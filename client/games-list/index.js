@@ -1,43 +1,8 @@
 import React from 'react';
 import { Router } from "@reach/router"
 
+import Game from '../game';
 import GameButton from '../game-button';
-import Board from '../board';
-
-class Game extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = { selected: []};
-		this.handlePickCard = this.handlePickCard.bind(this);
-	}
-
-	handlePickCard(row, column) {
-		const { selected } = this.state;
-		if (selected.length === 1) {
-			this.setState({ selected: [...selected, { row, column }] })
-			return window.setTimeout(() => {
-				this.setState({ selected: []})
-			}, 2000);
-		}
-
-		this.setState({ selected: [...selected, { row, column }]});
-	}
-
-	render() {
-		return (
-			<div>
-				{ `Game: ${this.props.id}` }
-				<Board 
-					size={{ rows: 4, columns: 5 }} 
-					handlePickCard={this.handlePickCard} 
-					selectedCards={this.state.selected}
-					openedCards={[]}
-				/>
-			</div>
-		);
-	}
-};
 
 const List = ({ games }) => {
 	return games.map(game => <GameButton key={game._id} id={game._id} {...game} />);
