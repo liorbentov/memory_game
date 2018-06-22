@@ -5,7 +5,7 @@ import Styles from './style.css';
 
 const ContentDisplay = ({ className, content }) => {
 	if (!content) {
-		return <span className={className}>Hello</span>;
+		return <span className={className}></span>;
 	}
 
 	if (content.type === 'text') {

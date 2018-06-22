@@ -5,8 +5,8 @@
   display: inline-block;
   width: 100px;
   height: 150px;
-  border: 2px solid gray;
-  background-color: wheat;
+  border: 2px solid #D6D6D6;
+  background: -webkit-linear-gradient(-35deg, #2082f5 0%,#FFF 10%, #2082f5 20%,#FFF 30%, #2082f5 40%,#FFF 50%, #2082f5 60%,#FFF 70%, #2082f5 80%,#FFF 90%, #2082f5 100%);
   border-radius: 5px;
   text-align: center;
   vertical-align: middle;
@@ -16,7 +16,13 @@
 
 .flipped {
   transform: rotateY(180deg);
-  background-color: lightgreen;
+  background: white;
+}
+
+@keyframes opa {
+  0% { opacity: 0 };
+  99% { opacity: 0 };
+  100% { opacity: 1 };
 }
 
 .front {
@@ -27,6 +33,7 @@
 .back {
   transform: rotateY(180deg);
   display: inline-block;
+  animation: opa 1s forwards;
 }
 
 .img {
