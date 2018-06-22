@@ -15,12 +15,34 @@ class Game extends React.Component {
 			isLoading: false, 
 			opened: [], 
 			activePlayer: null,
-			results: {}
+			results: {},
+			dimentions: null,
 		};
 		
 		this.handlePickCard = this.handlePickCard.bind(this);
 		this.handleSwitchPlayer = this.handleSwitchPlayer.bind(this);
 		this.setPlayer = this.setPlayer.bind(this);
+	}
+
+	componentDidMount() {
+		this._isMounted = true;
+		this.startGame();
+	}
+
+	componentWillUnmount() {
+		this._isMounted = false;
+	}
+
+	startGame() {
+		return fetch(`http://localhost:3000/api/games/${this.props.id}/start`)
+			.then(data => data.json())
+			.then(({ x, y }) => {
+				if (!this._isMounted) {
+					return null;
+				}
+				this.setState({ dimentions: { rows: x, columns: y }})
+			})
+			.catch(() => console.log("Error"));
 	}
 
 	setPlayer(activePlayer) {
@@ -33,13 +55,13 @@ class Game extends React.Component {
 	}
 
 	isFinished() {
-		console.log(this.state.results);
 		let currentResults = 0;
 		for (let result in this.state.results) {
 			currentResults += this.state.results[result];
 		}
 
-		return currentResults === 10;
+		const { dimentions } = this.state;
+		return currentResults === dimentions.rows * dimentions.columns / 2;
 	}
 
 	fetchCard(row, column) {
@@ -107,6 +129,11 @@ class Game extends React.Component {
 	}
 
 	render() {
+		const { dimentions } = this.state;
+		if (!dimentions) {
+			return null;
+		}
+
 		return (
 			<div>
 				<div className={classNames(Styles.gameContainer)}>
@@ -118,7 +145,7 @@ class Game extends React.Component {
 						setPlayer={this.setPlayer}
 					/>
 					<Board 
-						size={{ rows: 4, columns: 5 }} 
+						size={dimentions} 
 						handlePickCard={this.handlePickCard} 
 						selectedCards={this.state.selected}
 						openedCards={this.state.opened}

@@ -1,4 +1,3 @@
-const combineLoaders = require('webpack-combine-loaders');
 const path = require('path');
 
 module.exports = {

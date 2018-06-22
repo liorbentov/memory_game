@@ -25,11 +25,15 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
-let matrix = logic.buildMatrix(10);
+let matrix;
 
 app.get('/api/games/:id/start', function(req, res) {
     const { id } = req.params;
-    res.send(`start game (${id})`);
+    db.getGameItems(id).then(values => {
+      const { items } = values;
+      matrix = logic.buildMatrix(items.length);
+      res.send(logic.getBoardDimentions(items.length));
+    });
 });
 
 app.get('/api/games', (req, res) => {
