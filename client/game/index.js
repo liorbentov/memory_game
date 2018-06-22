@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Board from '../board';
+import PlayersList from '../players-list';	
 
 class Game extends React.Component {
 	constructor(props) {
@@ -60,6 +61,7 @@ class Game extends React.Component {
 		return (
 			<div>
 				{ `Game: ${this.props.id}` }
+				<PlayersList gameId={this.props.id} />
 				<Board 
 					size={{ rows: 4, columns: 5 }} 
 					handlePickCard={this.handlePickCard} 

@@ -1,31 +1,21 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import Gravatar from "react-gravatar";
 
-class Player extends React.Component {
-	constructor(props) {
-		super(props);
-  		
-  		this.state = { email: "", name: "" };
-
-  		this.handleChangeName = this.handleChangeName.bind(this);
-  		this.handleChangeEmail = this.handleChangeEmail.bind(this);
-	}
-
-  handleChangeName(e){
-    this.setState({ name: e.target.value });
-  }
-
-  handleChangeEmail(e){
-    this.setState({ email: e.target.value });
-  }
-
+class Player extends Component {
   render() {
-    const { name, email } = this.state;
+    const { name, mail } = this.props;
     return (
       <div>
-        <input type="text" value={name} onChange={this.handleChangeName} />
-        <input type="text" value={email} onChange={this.handleChangeEmail} />
-        <Gravatar email={email || name} />
+        <Gravatar email={mail || name} />
       </div>
     );
   }
 }
+
+Player.propTypes = {
+  name: PropTypes.string,
+  mail: PropTypes.string.isRequired,
+};
+
+export default Player;
