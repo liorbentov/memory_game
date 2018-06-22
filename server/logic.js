@@ -1,11 +1,3 @@
-
-/*
-[ 0,  1,  2,  3,  4,
-  5,  6,  7,  8,  9,
- 10, 11, 12, 13, 14,
- 15, 16, 17, 18, 19 ]
-*/
-
 const getPlaceIndexes = (place, dimentions) => {
   const row = Math.floor(place / dimentions.y);
   const col = place - (row * dimentions.y);
@@ -74,7 +66,6 @@ const getBoardDimentions = num => {
   const dividers = getDividers(num);
   if (dividers.length === 0) {
     //throw new Error('Number is not dividing well');
-    console.error(`${num} is not dividing well`);
     return null;
   }
 

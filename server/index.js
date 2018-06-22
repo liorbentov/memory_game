@@ -61,11 +61,6 @@ app.post('/api/games/:id/item', (req, res) => {
   });
 });
 
-app.post('/api/games', (req, res) => {
-    console.log(req.body.id);
-    res.send('ok');
-});
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
