@@ -10,6 +10,8 @@
     align-items: center;
     justify-content: space-between;
     padding-right: 10px;
+    position: relative;
+    margin-right: 30px;
 }
 
 .player-container > * {
@@ -25,6 +27,15 @@
 .activePlayer {
 	box-shadow: 1px 1px 1px 1px #b8e8c0;
     background-color: #eaffea;
+    transition: all 1s;
+}
+
+.activePlayer:after {
+    font-family: "Font Awesome 5 Free";
+    content: '\f060';
+    position: absolute;
+    top: 36px;
+    right: -30px;
     transition: all 1s;
 }
 

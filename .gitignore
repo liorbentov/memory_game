@@ -61,7 +61,7 @@ typings/
 .next
 
 # webpack artifacts
-dist/
+dist/bundle.js
 
 # mongodb
 data/db/
