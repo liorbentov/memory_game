@@ -4,10 +4,12 @@ import classNames from 'classnames';
 import { Link, Router } from "@reach/router"
 
 import GamesList from './games-list';
+import TeamsList from './teams-list';
 import Home from './home';
 import Styles from './style.css';
 
-const Game = props => {
+const Wrapper = props => {
+	console.log(props);
 	return props.children;
 };
 
@@ -18,12 +20,16 @@ class App extends React.Component {
 				<nav className={classNames(Styles.navbar)}>
 				  <Link className={classNames(Styles.logo)} to="/">MemoryGame</Link>{" "}
 				  <Link to="games">Games</Link>
+				  <Link to="teams">Teams</Link>
 				</nav>
 				<Router>
 				  <Home path="/" />
 				  <GamesList path="games">
-				  	<Game path=":id" />
+				  	<Wrapper path=":id" />
 				  </GamesList>
+				  <TeamsList path="teams">
+				  	<Wrapper path=":id" />
+				  </TeamsList>
 				</Router>
 			</div>
 		)
