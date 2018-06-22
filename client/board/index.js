@@ -5,6 +5,16 @@ import classNames from 'classnames';
 import Card from '../card';
 import Styles from './style.css';
 
+const findCard = (card, deck) => {
+	return deck.find(({ row, column }) => {
+		return card.column === column && card.row === row;
+	})
+};
+
+const isCardInDeck = (card, deck) => {
+	return !!findCard(card, deck);
+};
+
 class Board extends Component {
 	render() {
 		const { size: { rows, columns } } = this.props;
@@ -16,20 +26,19 @@ class Board extends Component {
 			let cards = [];	
 
 			for (let colIndex = 0; colIndex < actualColumns; colIndex++) {
-				const card = openedCards.find(({ row, column }) => {
-					return colIndex === column && rowIndex === row;
-				});
-
-				const isOpened = !!card;
-				const data = card ? card.data : '';
+				const card = { row: rowIndex, column: colIndex };
+				const isSelected = isCardInDeck(card, this.props.selectedCards);
+				const openedCard = findCard(card, openedCards)
+				const data = !!openedCard ? openedCard.data : '';
 
 				cards.push(<Card
 					key={`${rowIndex}${colIndex}`}
 					data={data} 
 					row={rowIndex} 
 					column={colIndex} 
-					checked={isOpened} 
+					checked={!!openedCard} 
 					onChange={this.props.handlePickCard}
+					isSelected={isSelected}
 				/>);
 			}
 

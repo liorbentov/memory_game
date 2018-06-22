@@ -15,7 +15,7 @@ const ContentDisplay = ({ className, content }) => {
 	return <img src={content.value} className={classNames(className, Styles.img)} />;
 };
 
-export default ({ checked, onChange, row, column, data }) => {
+export default ({ checked, onChange, row, column, data, isSelected }) => {
 	const handleCheck = () => onChange(row, column);
 
 	// const content = checked ? data : 'Hello';
@@ -23,7 +23,10 @@ export default ({ checked, onChange, row, column, data }) => {
 	return (
 		<span className={classNames(Styles['card-container'])}>
 			<button 
-				className={classNames(Styles.flipper, { [Styles.flipped] : checked })} 
+				className={classNames(
+					Styles.flipper, 
+					{ [Styles.flipped] : checked }, 
+					{ [Styles.selected] : isSelected })} 
 				onClick={handleCheck}
 				>
 				<ContentDisplay content={data} className={className}/>
