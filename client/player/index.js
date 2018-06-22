@@ -7,19 +7,22 @@ import Styles from './style.css';
 
 class Player extends Component {
   render() {
-    const { name, mail } = this.props;
+    const { isActive, name, mail, results } = this.props;
     return (
-      <div className={classNames(Styles['player-container'])}>
+      <div className={classNames(Styles['player-container'], { [Styles.activePlayer]: isActive })}>
         <Gravatar email={mail || name} size={100} className={classNames(Styles.gravatar)} />
-        <span className="player-name">{name}</span>
+        <span>{name}</span>
+        <span className={classNames(Styles.results)}>({results})</span>
       </div>
     );
   }
 }
 
 Player.propTypes = {
-  name: PropTypes.string,
+  isActive: PropTypes.bool,
   mail: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  results: PropTypes.number,
 };
 
 export default Player;

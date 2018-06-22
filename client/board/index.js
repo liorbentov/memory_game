@@ -24,6 +24,7 @@ class Board extends Component {
 				const data = card ? card.data : '';
 
 				cards.push(<Card
+					key={`${rowIndex}${colIndex}`}
 					data={data} 
 					row={rowIndex} 
 					column={colIndex} 
@@ -32,7 +33,7 @@ class Board extends Component {
 				/>);
 			}
 
-			board.push(<div className={classNames(Styles.boardRow)}>{cards}</div>);
+			board.push(<div key={rowIndex} className={classNames(Styles.boardRow)}>{cards}</div>);
 		}	
 
 		return <div>{board}</div>;

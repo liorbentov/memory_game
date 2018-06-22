@@ -2,6 +2,14 @@
 	vertical-align: middle;
     font-size: 24px;
     margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    box-shadow: 1px 1px 1px 1px #DDD;
+    transition: all 1s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 10px;
 }
 
 .player-container > * {
@@ -9,5 +17,17 @@
 }
 
 .gravatar {
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
     margin-right: 10px;
+}
+
+.activePlayer {
+	box-shadow: 1px 1px 1px 1px #b8e8c0;
+    background-color: #eaffea;
+    transition: all 1s;
+}
+
+.results {
+    font-size: 20px;
 }

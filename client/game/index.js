@@ -9,8 +9,26 @@ class Game extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { selected: [], isLoading: false, opened: [] };
+		this.state = { 
+			selected: [], 
+			isLoading: false, 
+			opened: [], 
+			activePlayer: null,
+			results: {}
+		};
+		
 		this.handlePickCard = this.handlePickCard.bind(this);
+		this.handleSwitchPlayer = this.handleSwitchPlayer.bind(this);
+		this.setPlayer = this.setPlayer.bind(this);
+	}
+
+	setPlayer(activePlayer) {
+		this.setState({ activePlayer });
+	}
+
+	handleSwitchPlayer() {
+		const nextPlayer = this.playersList.switchPlayer();
+		this.setState({ activePlayer: nextPlayer });
 	}
 
 	fetchCard(row, column) {
@@ -32,6 +50,24 @@ class Game extends React.Component {
 			});
 	}
 
+	handleMatch(selectedCards) {
+		const { results, activePlayer, opened } = this.state;
+		const activePlayerResults = results[activePlayer];
+
+		let newResults;
+		if (activePlayerResults) {
+			newResults = Object.assign(results, { [activePlayer]: activePlayerResults + 1 });
+		} else {
+			newResults = Object.assign(results, { [activePlayer]: 1 });
+		}
+
+		this.setState({ 
+			opened: [...opened, ...selectedCards], 
+			selected: [], 
+			results: newResults 
+		});
+	}
+
 	handlePickCard(row, column) {
 		const { selected, opened } = this.state;
 		if (selected.length === 1) {
@@ -41,12 +77,12 @@ class Game extends React.Component {
 					this.setState({ selected: newSelected });
 
 					if (selected[0].data.value === data.value) {
-						this.setState({ opened: [...opened, ...newSelected], selected: [] })
-						return console.log("Match!");
+						return this.handleMatch(newSelected);
 					}
 
 					return window.setTimeout(() => {
-						this.setState({ selected: []})
+						this.handleSwitchPlayer();
+						this.setState({ selected: []});
 					}, 1000);
 				})
 				.catch(() => console.log("error"));
@@ -62,7 +98,13 @@ class Game extends React.Component {
 	render() {
 		return (
 			<div className={classNames(Styles.gameContainer)}>
-				<PlayersList gameId={this.props.id} />
+				<PlayersList 
+					gameId={this.props.id} 
+					results={this.state.results} 
+					activePlayer={this.state.activePlayer}
+					ref={ elm => this.playersList = elm }
+					setPlayer={this.setPlayer}
+				/>
 				<Board 
 					size={{ rows: 4, columns: 5 }} 
 					handlePickCard={this.handlePickCard} 

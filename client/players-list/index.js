@@ -8,6 +8,8 @@ class PlayersList extends Component {
 		super(props);
 
 		this.state = { players: [], isLoading: false };
+
+		this.switchPlayer = this.switchPlayer.bind(this);
 	}
 
 	componentDidMount() {
@@ -29,6 +31,7 @@ class PlayersList extends Component {
 				if (!this._isMounted) {
 					return null;
 				}
+				this.props.setPlayer(data.players[0].mail);
 				return this.setState({ isLoading: false, players: data.players });
 			})
 			.catch(() => {
@@ -39,6 +42,18 @@ class PlayersList extends Component {
 			});
 	}
 
+	switchPlayer() {
+		const { players } = this.state;
+		const { activePlayer } = this.props;
+		if (!activePlayer) {
+			return players[0].mail;
+		}
+
+		const index = players.findIndex(player => player.mail === activePlayer);
+		const nextPlayerIndex = (index + 1) % players.length;
+		return players[nextPlayerIndex].mail;
+	}
+
 	render() {
 		const { isLoading, players } = this.state;
 
@@ -47,13 +62,21 @@ class PlayersList extends Component {
 		}
 
 		return (
-			<div>{ players.map(player => <Player key={player.mail} {...player} />) }</div>
+			<div>{ 
+				players.map(player => {
+					const { mail } = player;
+					const isActive = mail === this.props.activePlayer;
+					const results = this.props.results[mail] || 0;
+					return <Player key={mail} isActive={isActive} results={results} {...player} />
+			}) }</div>
 		);
 	}
 }
 
 PlayersList.propTypes = {
+	activePlayer: PropTypes.string,
 	gameId: PropTypes.string.isRequired,
+	results: PropTypes.object,
 };
 
 export default PlayersList;
