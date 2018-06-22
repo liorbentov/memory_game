@@ -1,0 +1,13 @@
+.player-container {
+	vertical-align: middle;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.player-container > * {
+	vertical-align: middle;
+}
+
+.gravatar {
+    margin-right: 10px;
+}
