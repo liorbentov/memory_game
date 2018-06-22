@@ -28,11 +28,23 @@ const GameItemsSchema = new Schema({
  items: [Item]
 });
 
+const Player = new Schema({
+	name: String,
+	mail: String,
+});
+
+const GamePlayersSchema = new Schema({
+ id: ObjectId,
+ gameId: String,
+ players: [Player]
+});
+
 const connectionString = `mongodb://localhost:${DB_PORT}/${DB_NAME}`;
 
 const conn = mongoose.createConnection(connectionString);
 const MyModel = conn.model('games', Game);
 const GameItems = conn.model('GameItem', GameItemsSchema, 'gameItems');
+const GamePlayers = conn.model('GameItem', GamePlayersSchema, 'gamePlayers');
 
 const getGames = () => {
 	return MyModel.find();
@@ -42,7 +54,12 @@ const getGameItems = id => {
 	return GameItems.findOne({ gameId: id });
 }
 
+const getGamePlayers = id => {
+	return GamePlayers.findOne({ gameId: id });
+}
+
 module.exports = {
 	getGames,
-	getGameItems
+	getGameItems,
+	getGamePlayers
 }

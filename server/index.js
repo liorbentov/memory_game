@@ -36,6 +36,11 @@ app.get('/api/games', (req, res) => {
   db.getGames().then(values => res.send(values));
 });
 
+app.get('/api/games/:id/players', (req, res) => {
+  const { id } = req.params;
+  db.getGamePlayers(id).then(values => res.send(values));
+});
+
 app.get('/api/games/:id/items', (req, res) => {
   const { id } = req.params;
   db.getGameItems(id).then(values => res.send(values));
