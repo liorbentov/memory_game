@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import Board from '../board';
+import Confetti from '../confetti';
 import PlayersList from '../players-list';	
 import Styles from './style.css';
 
@@ -29,6 +30,16 @@ class Game extends React.Component {
 	handleSwitchPlayer() {
 		const nextPlayer = this.playersList.switchPlayer();
 		this.setState({ activePlayer: nextPlayer });
+	}
+
+	isFinished() {
+		console.log(this.state.results);
+		let currentResults = 0;
+		for (let result in this.state.results) {
+			currentResults += this.state.results[result];
+		}
+
+		return currentResults === 10;
 	}
 
 	fetchCard(row, column) {
@@ -97,20 +108,24 @@ class Game extends React.Component {
 
 	render() {
 		return (
-			<div className={classNames(Styles.gameContainer)}>
-				<PlayersList 
-					gameId={this.props.id} 
-					results={this.state.results} 
-					activePlayer={this.state.activePlayer}
-					ref={ elm => this.playersList = elm }
-					setPlayer={this.setPlayer}
-				/>
-				<Board 
-					size={{ rows: 4, columns: 5 }} 
-					handlePickCard={this.handlePickCard} 
-					selectedCards={this.state.selected}
-					openedCards={this.state.opened}
-				/>
+			<div>
+				<div className={classNames(Styles.gameContainer)}>
+					<PlayersList 
+						gameId={this.props.id} 
+						results={this.state.results} 
+						activePlayer={this.state.activePlayer}
+						ref={ elm => this.playersList = elm }
+						setPlayer={this.setPlayer}
+					/>
+					<Board 
+						size={{ rows: 4, columns: 5 }} 
+						handlePickCard={this.handlePickCard} 
+						selectedCards={this.state.selected}
+						openedCards={this.state.opened}
+					/>
+					
+				</div>
+				{ this.isFinished() && <Confetti />}
 			</div>
 		);
 	}

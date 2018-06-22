@@ -34,6 +34,7 @@
   transform: rotateY(180deg);
   display: inline-block;
   animation: opa 1s forwards;
+  font-size: 24px;
 }
 
 .img {
