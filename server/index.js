@@ -25,8 +25,7 @@ app.use(webpackDevMiddleware(compiler, {
   historyApiFallback: true,
 }));
 
-const matrix = logic.buildMatrix(10);
-console.log(matrix);
+let matrix = logic.buildMatrix(10);
 
 app.get('/api/games/:id/start', function(req, res) {
     const { id } = req.params;
@@ -51,8 +50,6 @@ app.post('/api/games/:id/item', (req, res) => {
     const item = values.items[itemIndex];
     res.send(item);
   });
-
-  // res.send(`${matrix[row][column]}`);
 });
 
 app.post('/api/games', (req, res) => {
