@@ -33,14 +33,18 @@ app.post('/api/games/:gameId/start', function(req, res) {
   const { gameId } = req.params;
   const { teamId } = req.body;
 
+  let instanceId;
   db.getTeam(teamId)
     .then(team => team.members)
     .then(members => db.createGameInstance(gameId, members))
-    .then(() => db.getGameItems(gameId))
+    .then(response => { 
+      instanceId = response._id;
+      return db.getGameItems(gameId)
+    })
     .then(response => {
         const { items } = response;
         matrix = logic.buildMatrix(items.length);
-        res.send(logic.getBoardDimentions(items.length));
+        res.send({...logic.getBoardDimentions(items.length), instanceId });
     });
 });
 

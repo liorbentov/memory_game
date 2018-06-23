@@ -17,6 +17,7 @@ class Game extends React.Component {
       activePlayer: null,
       results: {},
       dimentions: null,
+      instanceId: null,
     };
 
     this.handlePickCard = this.handlePickCard.bind(this);
@@ -45,11 +46,11 @@ class Game extends React.Component {
       body: JSON.stringify({ teamId }),
     })
       .then(data => data.json())
-      .then(({ x, y }) => {
+      .then(({ x, y, instanceId }) => {
         if (!this._isMounted) {
           return null;
         }
-        this.setState({ dimentions: { rows: x, columns: y } });
+        this.setState({ dimentions: { rows: x, columns: y }, instanceId });
       })
       .catch(() => console.log('Error'));
   }
@@ -141,8 +142,8 @@ class Game extends React.Component {
   }
 
   render() {
-    const { dimentions } = this.state;
-    if (!dimentions) {
+    const { dimentions, instanceId } = this.state;
+    if (!dimentions || !instanceId) {
       return null;
     }
 
@@ -150,7 +151,7 @@ class Game extends React.Component {
       <div>
         <div className={classNames(Styles.gameContainer)}>
           <PlayersList
-            instanceId={this.props.id}
+            instanceId={instanceId}
             results={this.state.results}
             activePlayer={this.state.activePlayer}
             ref={elm => (this.playersList = elm)}

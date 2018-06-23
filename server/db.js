@@ -62,7 +62,7 @@ const getGameItems = id => {
 };
 
 const getGameInstances = id => {
-  return GameInstances.findOne({ gameId: id });
+  return GameInstances.findOne({ _id: id });
 };
 
 const createGameInstance = (gameId, players) => {
