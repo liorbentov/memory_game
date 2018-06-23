@@ -57,7 +57,7 @@ export default class MembersList extends Component {
         </div>
         <div>
           <h3>Pick a game</h3>
-          { members.length && <GamesList teamId={this.props.teamId} /> }
+          {members.length && <GamesList teamId={this.props.teamId} />}
         </div>
       </div>
     );

@@ -8,7 +8,7 @@
     "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
-    "prettier": "prettier --single-quote --trailing-comma es5 --write './client/**/*.js', './server/**/*.js'"
+    "prettier": "prettier --single-quote --trailing-comma es5 --write '**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "express": "4.16.3",
     "mongoose": "5.1.6",
     "path": "0.12.7",
+    "pluralize": "7.0.0",
     "prop-types": "15.6.2",
     "react": "16.4.1",
     "react-confetti": "2.3.0",

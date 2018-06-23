@@ -15,15 +15,15 @@ const Wrapper = props => {
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div className={classNames(Styles.container)}>
         <nav className={classNames(Styles.navbar)}>
           <Link className={classNames(Styles.logo)} to="/">
             MemoryGame
-          </Link>{' '}
+          </Link>
           <Link to="games">Games</Link>
           <Link to="teams">Teams</Link>
         </nav>
-        <Router>
+        <Router className={classNames(Styles.contentContainer)}>
           <Home path="/" />
           <GamesList path="games">
             <Wrapper path="/" />

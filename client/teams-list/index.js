@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
+import pluralize from 'pluralize';
 import { Link, Router } from '@reach/router';
 
 import Player from '../player';
 import NewTeam from '../new-team';
 import Team from '../team';
 import GamesList from '../games-list';
+import Styles from './style.css';
 
 const List = ({ teams, navigate }) => {
   return (
-    <div>
-      <div>
-        { teams.map(team => {
+    <div className={classNames(Styles.teamsListContainer)}>
+      <div className={classNames(Styles.buttonsContainer)}>
+        {teams.map(team => {
           return (
-            <button key={team._id} onClick={() => {
-              navigate(`/teams/${team._id}`)
-            }}>
+            <button
+              key={team._id}
+              onClick={() => {
+                navigate(`/teams/${team._id}`);
+              }}
+              className={classNames(Styles.teamButton)}
+            >
               <h3>{team.name}</h3>
-              <h5>{team._id}</h5>
-              <h4>{team.members.length}</h4>
+              <p>{pluralize('member', team.members.length, true)}</p>
             </button>
           );
         })}
+        <Link to="/teams/new">Create a new team</Link>
       </div>
-      <Link to="/teams/new">Create a new team</Link>
     </div>
   );
 };
@@ -49,7 +55,7 @@ export default class TeamsList extends Component {
   render() {
     const { teams, isLoading } = this.state;
     if (isLoading) {
-    	return <div>Loading...</div>;
+      return <div>Loading...</div>;
     }
 
     return (

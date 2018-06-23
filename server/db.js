@@ -50,7 +50,11 @@ const connectionString = `mongodb://localhost:${DB_PORT}/${DB_NAME}`;
 const conn = mongoose.createConnection(connectionString);
 const MyModel = conn.model('games', Game);
 const GameItems = conn.model('GameItem', GameItemsSchema, 'gameItems');
-const GameInstances = conn.model('GameInstancs', GameInstancesSchema, 'gameInstances');
+const GameInstances = conn.model(
+  'GameInstancs',
+  GameInstancesSchema,
+  'gameInstances'
+);
 const Team = conn.model('Team', TeamSchema);
 
 const getGames = () => {

@@ -40,7 +40,7 @@ class NewTeam extends Component {
   };
 
   postTeam(name, members) {
-    this.setState({ isCreating: true })
+    this.setState({ isCreating: true });
     return fetch(`http://localhost:3000/api/teams`, {
       method: 'post',
       headers: {
@@ -53,26 +53,26 @@ class NewTeam extends Component {
     })
       .then(data => data.json())
       .then(data => {
-        this.setState({ isCreating: false })
-        this.props.navigate(`/teams/${data._id}`)
+        this.setState({ isCreating: false });
+        this.props.navigate(`/teams/${data._id}`);
       })
       .catch(() => {
-        this.setState({ isCreating: false })
-        console.log("error!")
-      })
+        this.setState({ isCreating: false });
+        console.log('error!');
+      });
   }
 
   createTeam = () => {
     const { rows, teamName } = this.state;
 
     if (!teamName) {
-      return window.alert("You must enter a team name!");
+      return window.alert('You must enter a team name!');
     }
 
     const filteredRows = rows.filter(row => !row.isEmpty);
 
     if (!filteredRows.length) {
-      return window.alert("You must enter somw team members!");
+      return window.alert('You must enter somw team members!');
     }
 
     const mappedRows = filteredRows.map(({ name, mail }) => ({ name, mail }));
@@ -102,7 +102,7 @@ class NewTeam extends Component {
           );
         })}
         <button onClick={this.createTeam}>Create</button>
-        { this.state.isCreating && "Creating" }
+        {this.state.isCreating && 'Creating'}
       </div>
     );
   }

@@ -25,8 +25,8 @@ ContentDisplay.propTypes = {
     PropTypes.shape({
       type: PropTypes.string,
       value: PropTypes.string,
-    })
-  ])
+    }),
+  ]),
 };
 
 export default ({ checked, onChange, row, column, data, isSelected }) => {

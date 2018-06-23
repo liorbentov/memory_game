@@ -2,9 +2,7 @@ const path = require('path');
 
 module.exports = {
   context: path.join(__dirname, 'client'),
-  entry: [
-    './index.js',
-  ],
+  entry: ['./index.js'],
   mode: 'development',
   output: {
     path: path.join(__dirname, 'dist'),
@@ -15,9 +13,7 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: [
-          'babel-loader',
-        ],
+        use: ['babel-loader'],
       },
       {
         test: /\.css$/,

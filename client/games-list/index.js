@@ -42,7 +42,7 @@ export default class GamesList extends Component {
         if (!this._isMounted) {
           return null;
         }
-        
+
         this.setState({ isLoading: false });
       });
   }
@@ -54,12 +54,20 @@ export default class GamesList extends Component {
     }
 
     return (
-        <Match path="/games/:id">
-          { props => props.match ?
-            <Game {...props.match} {...props} /> :
-            <List games={games} teamId={this.props.teamId} {...props.match} {...props} />
-          }
-        </Match>
+      <Match path="/games/:id">
+        {props =>
+          props.match ? (
+            <Game {...props.match} {...props} />
+          ) : (
+            <List
+              games={games}
+              teamId={this.props.teamId}
+              {...props.match}
+              {...props}
+            />
+          )
+        }
+      </Match>
     );
   }
 }

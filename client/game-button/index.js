@@ -14,7 +14,7 @@ class GameButton extends Component {
         state={{ teamId: this.props.teamId }}
       >
         <h3>{this.props.name}</h3>
-        <h5>{this.props.description}</h5>
+        <p>{this.props.description}</p>
       </Link>
     );
   }

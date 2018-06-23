@@ -1,3 +1,10 @@
+.container {
+	display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: #fdfdfd;
+}
+
 .navbar {
 	height: 40;
     padding: 0 10px;
@@ -19,4 +26,9 @@
 
 .navbar > a:not(.logo) {
 	font-size: 18px;
+}
+
+.contentContainer {
+	outline: none;
+    padding: 0 10px;
 }

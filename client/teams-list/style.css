@@ -1,0 +1,29 @@
+.teamsListContainer {
+	display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.buttonsContainer {
+	display: flex;
+    flex-direction: column;
+    align-items: start;
+    min-width: 300px;
+    /*border: 1px solid;
+    border-radius: 5px;
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;*/
+}
+
+.teamButton {
+	border: 0;
+	background: transparent;
+	text-align: left;
+	width: 100%;
+}
+
+.teamButton:hover {
+	background-color: #ebf3fd;
+    border-radius: 5px;
+}
