@@ -33,7 +33,7 @@ const Player = new Schema({
   mail: String,
 });
 
-const GamePlayersSchema = new Schema({
+const GameInstancesSchema = new Schema({
   id: ObjectId,
   gameId: String,
   players: [Player],
@@ -50,7 +50,7 @@ const connectionString = `mongodb://localhost:${DB_PORT}/${DB_NAME}`;
 const conn = mongoose.createConnection(connectionString);
 const MyModel = conn.model('games', Game);
 const GameItems = conn.model('GameItem', GameItemsSchema, 'gameItems');
-const GamePlayers = conn.model('GameItem', GamePlayersSchema, 'gamePlayers');
+const GameInstances = conn.model('GameInstancs', GameInstancesSchema, 'gameInstances');
 const Team = conn.model('Team', TeamSchema);
 
 const getGames = () => {
@@ -61,8 +61,12 @@ const getGameItems = id => {
   return GameItems.findOne({ gameId: id });
 };
 
-const getGamePlayers = id => {
-  return GamePlayers.findOne({ gameId: id });
+const getGameInstances = id => {
+  return GameInstances.findOne({ gameId: id });
+};
+
+const createGameInstance = (gameId, players) => {
+  return GameInstances.create({ gameId, players });
 };
 
 const createTeam = team => {
@@ -78,10 +82,11 @@ const getTeam = teamId => {
 };
 
 module.exports = {
+  createGameInstance,
   createTeam,
   getGames,
   getGameItems,
-  getGamePlayers,
+  getGameInstances,
   getTeam,
   getTeams,
 };

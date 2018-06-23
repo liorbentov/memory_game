@@ -41,7 +41,7 @@ class NewTeam extends Component {
 
   postTeam(name, members) {
     this.setState({ isCreating: true })
-        return fetch(`http://localhost:3000/api/teams`, {
+    return fetch(`http://localhost:3000/api/teams`, {
       method: 'post',
       headers: {
         'content-type': 'application/json',

@@ -34,7 +34,16 @@ class Game extends React.Component {
   }
 
   startGame() {
-    return fetch(`http://localhost:3000/api/games/${this.props.id}/start`)
+    const { id, location } = this.props;
+    const { teamId } = location.state;
+
+    return fetch(`http://localhost:3000/api/games/${id}/start`, {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ teamId }),
+    })
       .then(data => data.json())
       .then(({ x, y }) => {
         if (!this._isMounted) {
@@ -141,7 +150,7 @@ class Game extends React.Component {
       <div>
         <div className={classNames(Styles.gameContainer)}>
           <PlayersList
-            gameId={this.props.id}
+            instanceId={this.props.id}
             results={this.state.results}
             activePlayer={this.state.activePlayer}
             ref={elm => (this.playersList = elm)}

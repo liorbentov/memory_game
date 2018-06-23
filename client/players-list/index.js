@@ -8,8 +8,6 @@ class PlayersList extends Component {
     super(props);
 
     this.state = { players: [], isLoading: false };
-
-    this.switchPlayer = this.switchPlayer.bind(this);
   }
 
   componentDidMount() {
@@ -22,10 +20,10 @@ class PlayersList extends Component {
   }
 
   fetchPlayers() {
-    const { gameId } = this.props;
+    const { instanceId } = this.props;
 
     this.setState({ isLoading: true });
-    return fetch(`http://localhost:3000/api/games/${gameId}/players`)
+    return fetch(`http://localhost:3000/api/instances/${instanceId}/players`)
       .then(data => data.json())
       .then(data => {
         if (!this._isMounted) {
@@ -42,7 +40,7 @@ class PlayersList extends Component {
       });
   }
 
-  switchPlayer() {
+  switchPlayer = () => {
     const { players } = this.state;
     const { activePlayer } = this.props;
     if (!activePlayer) {
@@ -52,7 +50,7 @@ class PlayersList extends Component {
     const index = players.findIndex(player => player.mail === activePlayer);
     const nextPlayerIndex = (index + 1) % players.length;
     return players[nextPlayerIndex].mail;
-  }
+  };
 
   render() {
     const { isLoading, players } = this.state;
@@ -83,7 +81,7 @@ class PlayersList extends Component {
 
 PlayersList.propTypes = {
   activePlayer: PropTypes.string,
-  gameId: PropTypes.string.isRequired,
+  instanceId: PropTypes.string.isRequired,
   results: PropTypes.object,
 };
 

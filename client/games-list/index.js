@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import { Router } from '@reach/router';
+import PropTypes from 'prop-types';
+import { Match, Router } from '@reach/router';
 
 import Game from '../game';
 import GameButton from '../game-button';
 
-const List = ({ games }) => {
+const List = ({ games, teamId }) => {
   return games.map(game => (
-    <GameButton key={game._id} id={game._id} {...game} />
+    <GameButton key={game._id} id={game._id} teamId={teamId} {...game} />
   ));
 };
 
 export default class GamesList extends Component {
-  state = { games: [], isLoading: false };
+  static propTypes = {
+    teamId: PropTypes.string,
+  };
+
+  state = { games: [], isLoading: true };
 
   componentDidMount() {
     this._isMounted = true;
@@ -49,10 +54,12 @@ export default class GamesList extends Component {
     }
 
     return (
-      <Router>
-        <List path="/" games={games} />
-        <Game path=":id" />
-      </Router>
+        <Match path="/games/:id">
+          { props => props.match ?
+            <Game {...props.match} {...props} /> :
+            <List games={games} teamId={this.props.teamId} {...props.match} {...props} />
+          }
+        </Match>
     );
   }
 }

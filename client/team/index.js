@@ -6,12 +6,12 @@ import Player from '../player';
 import GamesList from '../games-list';
 import Styles from './style.css';
 
-class MembersList extends Component {
-  constructor(props) {
-    super(props);
+export default class MembersList extends Component {
+  static propTypes = {
+    teamId: PropTypes.string,
+  };
 
-    this.state = { members: [], isLoading: false };
-  }
+  state = { members: [], isLoading: false };
 
   componentDidMount() {
     this._isMounted = true;
@@ -53,28 +53,13 @@ class MembersList extends Component {
       <div className={classNames(Styles.teamContainer)}>
         <div>
           <h3>Team members</h3>
-          {members.map(player => {
-            const { mail } = player;
-            
-            return (
-              <Player
-                key={mail}
-                {...player}
-              />
-            );
-          })}
+          {members.map(player => <Player key={player.mail} {...player} />)}
         </div>
         <div>
           <h3>Pick a game</h3>
-          <GamesList />
+          { members.length && <GamesList teamId={this.props.teamId} /> }
         </div>
       </div>
     );
   }
 }
-
-MembersList.propTypes = {
-  teamId: PropTypes.string,
-};
-
-export default MembersList;

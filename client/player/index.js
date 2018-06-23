@@ -29,10 +29,10 @@ class Player extends Component {
       );
     }
 
-    const { results, name } = this.props;
+    const { results, name, mail } = this.props;
     return (
       <span>
-        <span>{name}</span>
+        <span>{name || mail}</span>
         {results && (
           <span className={classNames(Styles.results)}>({results})</span>
         )}

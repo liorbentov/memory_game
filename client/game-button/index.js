@@ -6,15 +6,12 @@ import { Link } from '@reach/router';
 import Styles from './style.css';
 
 class GameButton extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Link
         className={classNames(Styles.gameButton)}
         to={`/games/${this.props.id}`}
+        state={{ teamId: this.props.teamId }}
       >
         <h3>{this.props.name}</h3>
         <h5>{this.props.description}</h5>

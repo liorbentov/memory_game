@@ -29,22 +29,28 @@ app.use(
 
 let matrix;
 
-app.get('/api/games/:id/start', function(req, res) {
-  const { id } = req.params;
-  db.getGameItems(id).then(values => {
-    const { items } = values;
-    matrix = logic.buildMatrix(items.length);
-    res.send(logic.getBoardDimentions(items.length));
-  });
+app.post('/api/games/:gameId/start', function(req, res) {
+  const { gameId } = req.params;
+  const { teamId } = req.body;
+
+  db.getTeam(teamId)
+    .then(team => team.members)
+    .then(members => db.createGameInstance(gameId, members))
+    .then(() => db.getGameItems(gameId))
+    .then(response => {
+        const { items } = response;
+        matrix = logic.buildMatrix(items.length);
+        res.send(logic.getBoardDimentions(items.length));
+    });
 });
 
 app.get('/api/games', (req, res) => {
   db.getGames().then(values => res.send(values));
 });
 
-app.get('/api/games/:id/players', (req, res) => {
+app.get('/api/instances/:id/players', (req, res) => {
   const { id } = req.params;
-  db.getGamePlayers(id).then(values => res.send(values));
+  db.getGameInstances(id).then(values => res.send(values));
 });
 
 app.get('/api/games/:id/items', (req, res) => {

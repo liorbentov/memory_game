@@ -10,7 +10,6 @@ import Styles from './style.css';
 
 const Wrapper = props => {
   console.log(props);
-  return props.children;
 };
 
 class App extends React.Component {
@@ -27,7 +26,7 @@ class App extends React.Component {
         <Router>
           <Home path="/" />
           <GamesList path="games">
-            <Wrapper path=":id" />
+            <Wrapper path="/" />
           </GamesList>
           <TeamsList path="teams">
             <Wrapper path=":id" />
