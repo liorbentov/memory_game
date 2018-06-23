@@ -27,7 +27,10 @@ const List = ({ teams, navigate }) => {
             </button>
           );
         })}
-        <Link to="/teams/new">Create a new team</Link>
+        <Link 
+          className={classNames(Styles.addTeam, Styles.teamButton)}
+          to="/teams/new"
+        ><i class="fas fa-plus" /> Create a new team</Link>
       </div>
     </div>
   );

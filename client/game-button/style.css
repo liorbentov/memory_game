@@ -1,14 +1,14 @@
 a.gameButton {
-	border: 0;
 	background: transparent;
-	text-align: left;
-	width: 100%;
-	text-decoration: none;
+	border: 0;
 	color: initial;
 	display: inline-block;
 	min-width: 300px;
-	text-align: left;
 	padding-left: 10px;
+	text-align: left;
+	text-align: left;
+	text-decoration: none;
+	width: 100%;
 }
 
 a.gameButton:hover {
