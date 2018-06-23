@@ -20,10 +20,13 @@ const ContentDisplay = ({ className, content }) => {
 
 ContentDisplay.propTypes = {
   className: PropTypes.string,
-  content: PropTypes.shape({
-    type: PropTypes.string,
-    value: PropTypes.string,
-  }),
+  content: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape({
+      type: PropTypes.string,
+      value: PropTypes.string,
+    })
+  ])
 };
 
 export default ({ checked, onChange, row, column, data, isSelected }) => {

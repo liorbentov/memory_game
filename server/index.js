@@ -63,9 +63,18 @@ app.post('/api/games/:id/item', (req, res) => {
   });
 });
 
+app.get('/api/teams', (req, res) => {
+  db.getTeams().then(teams => res.send(teams));
+});
+
 app.post('/api/teams', (req, res) => {
-  const {name, members} = req.body;
+  const { name, members } = req.body;
   db.createTeam({ name, members }).then(result => res.send(result));
+});
+
+app.get('/api/teams/:id/members', (req, res) => {
+  const { id } = req.params;
+  db.getTeam(id).then(team => res.send(team.members));
 });
 
 app.get('*', (req, res) => {

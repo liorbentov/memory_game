@@ -43,7 +43,7 @@ const TeamSchema = new Schema({
   id: ObjectId,
   name: String,
   members: [Player],
-})
+});
 
 const connectionString = `mongodb://localhost:${DB_PORT}/${DB_NAME}`;
 
@@ -67,11 +67,21 @@ const getGamePlayers = id => {
 
 const createTeam = team => {
   return Team.create(team);
-}
+};
+
+const getTeams = () => {
+  return Team.find();
+};
+
+const getTeam = teamId => {
+  return Team.findOne({ _id: new mongoose.Types.ObjectId(teamId) });
+};
 
 module.exports = {
   createTeam,
   getGames,
   getGameItems,
   getGamePlayers,
+  getTeam,
+  getTeams,
 };

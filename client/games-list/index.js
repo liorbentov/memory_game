@@ -14,7 +14,12 @@ export default class GamesList extends Component {
   state = { games: [], isLoading: false };
 
   componentDidMount() {
+    this._isMounted = true;
     this.fetchGames();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   fetchGames() {
@@ -22,9 +27,17 @@ export default class GamesList extends Component {
     fetch('http://localhost:3000/api/games')
       .then(data => data.json())
       .then(games => {
+        if (!this._isMounted) {
+          return null;
+        }
+
         this.setState({ games, isLoading: false });
       })
       .catch(() => {
+        if (!this._isMounted) {
+          return null;
+        }
+        
         this.setState({ isLoading: false });
       });
   }

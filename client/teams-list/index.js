@@ -1,38 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link, Router } from '@reach/router';
 
 import Player from '../player';
-import NewTeam from '../new-team'
+import NewTeam from '../new-team';
+import Team from '../team';
+import GamesList from '../games-list';
 
-const List = () => {
+const List = ({ teams, navigate }) => {
   return (
     <div>
-      <div>List</div>
+      <div>
+        { teams.map(team => {
+          return (
+            <button key={team._id} onClick={() => {
+              navigate(`/teams/${team._id}`)
+            }}>
+              <h3>{team.name}</h3>
+              <h5>{team._id}</h5>
+              <h4>{team.members.length}</h4>
+            </button>
+          );
+        })}
+      </div>
       <Link to="/teams/new">Create a new team</Link>
     </div>
   );
 };
 
-const Team = ({ id }) => {
-  return <div>{id}</div>;
-};
-
-export default class GamesList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { games: [], isLoading: false };
-  }
+export default class TeamsList extends Component {
+  state = { teams: [], isLoading: false };
 
   componentDidMount() {
-    // this.fetchGames();
+    this.fetchTeams();
   }
 
-  fetchGames() {
+  fetchTeams() {
     this.setState({ isLoading: true });
     fetch('http://localhost:3000/api/teams')
       .then(data => data.json())
-      .then(games => {
-        this.setState({ games, isLoading: false });
+      .then(teams => {
+        this.setState({ teams, isLoading: false });
       })
       .catch(() => {
         this.setState({ isLoading: false });
@@ -40,16 +47,16 @@ export default class GamesList extends React.Component {
   }
 
   render() {
-    // const { games, isLoading } = this.state;
-    // if (isLoading) {
-    // 	return <div>Loading...</div>;
-    // }
+    const { teams, isLoading } = this.state;
+    if (isLoading) {
+    	return <div>Loading...</div>;
+    }
 
     return (
       <Router>
-        <List path="/" />
+        <List path="/" teams={teams} />
         <NewTeam path="/new" />
-        <Team path=":id" />
+        <Team path=":teamId" />
       </Router>
     );
   }
