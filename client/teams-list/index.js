@@ -13,18 +13,9 @@ const List = () => {
 };
 
 class NewTeam extends React.Component {
-  constructor(props) {
-    super(props);
+  state = { rows: [{ isEmpty: true }], teamName: '' };
 
-    this.state = { rows: [{ isEmpty: true }], teamName: '' };
-
-    this.createTeam = this.createTeam.bind(this);
-    this.handleChangeAttribute = this.handleChangeAttribute.bind(this);
-    this.handleChangeTeamName = this.handleChangeTeamName.bind(this);
-    this.handleRemovePlayer = this.handleRemovePlayer.bind(this);
-  }
-
-  handleChangeAttribute(rowIndex, attribute, newValue) {
+  handleChangeAttribute = (rowIndex, attribute, newValue) => {
     const { rows } = this.state;
     const current = rows[rowIndex];
 
@@ -40,9 +31,9 @@ class NewTeam extends React.Component {
     this.setState({
       rows: [...rows.slice(0, rowIndex), row, ...rows.slice(rowIndex + 1)],
     });
-  }
+  };
 
-  handleRemovePlayer(rowIndex) {
+  handleRemovePlayer = rowIndex => {
     const { rows } = this.state;
 
     if (rows.length === 1) {
@@ -52,19 +43,19 @@ class NewTeam extends React.Component {
     this.setState({
       rows: [...rows.slice(0, rowIndex), ...rows.slice(rowIndex + 1)],
     });
-  }
+  };
 
-  handleChangeTeamName(e) {
+  handleChangeTeamName = e => {
     this.setState({ teamName: e.target.value });
-  }
+  };
 
-  createTeam() {
+  createTeam = () => {
     const { rows } = this.state;
     const filteredRows = rows.filter(row => !row.isEmpty);
     const mappedRows = filteredRows.map(({ name, mail }) => ({ name, mail }));
 
     console.log(rows, mappedRows);
-  }
+  };
 
   render() {
     return (

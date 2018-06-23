@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Router } from '@reach/router';
 
 import Game from '../game';
@@ -10,12 +10,8 @@ const List = ({ games }) => {
   ));
 };
 
-export default class GamesList extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { games: [], isLoading: false };
-  }
+export default class GamesList extends Component {
+  state = { games: [], isLoading: false };
 
   componentDidMount() {
     this.fetchGames();

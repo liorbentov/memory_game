@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import Styles from './style.css';
@@ -15,6 +16,14 @@ const ContentDisplay = ({ className, content }) => {
   return (
     <img src={content.value} className={classNames(className, Styles.img)} />
   );
+};
+
+ContentDisplay.propTypes = {
+  className: PropTypes.string,
+  content: PropTypes.shape({
+    type: PropTypes.string,
+    value: PropTypes.string,
+  }),
 };
 
 export default ({ checked, onChange, row, column, data, isSelected }) => {
