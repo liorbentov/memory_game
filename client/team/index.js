@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Player from '../player';
 import GamesList from '../games-list';
+import Styles from './style.css';
 
 class MembersList extends Component {
   constructor(props) {
@@ -48,18 +50,24 @@ class MembersList extends Component {
     }
 
     return (
-      <div>
-        {members.map(player => {
-          const { mail } = player;
-          
-          return (
-            <Player
-              key={mail}
-              {...player}
-            />
-          );
-        })}
-        <GamesList />
+      <div className={classNames(Styles.teamContainer)}>
+        <div>
+          <h3>Team members</h3>
+          {members.map(player => {
+            const { mail } = player;
+            
+            return (
+              <Player
+                key={mail}
+                {...player}
+              />
+            );
+          })}
+        </div>
+        <div>
+          <h3>Pick a game</h3>
+          <GamesList />
+        </div>
       </div>
     );
   }
