@@ -18,6 +18,7 @@
     margin-right: 0px;
     width: 100%;
     justify-content: start;
+    box-sizing: border-box;
 }
 
 .player-container > * {

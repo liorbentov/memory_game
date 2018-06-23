@@ -106,7 +106,10 @@ class NewTeam extends Component {
             />
           );
         })}
-        <button onClick={this.createTeam}>Create</button>
+        <button 
+          className={classNames(Styles.createButton)}
+          onClick={this.createTeam}
+        >Create</button>
         {this.state.isCreating && 'Creating'}
       </div>
     );
