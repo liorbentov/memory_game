@@ -8,14 +8,16 @@ import Styles from './style.css';
 class Player extends Component {
   getMainDOM() {
     if (this.props.isEditable) {
-      const { handleEdit, rowIndex, mail, name } = this.props;
+      const { handleEdit, rowIndex, mail, name, handleRemove, isEmpty } = this.props;
       const changeMail = e => handleEdit(rowIndex, 'mail', e.target.value);
       const changeName = e => handleEdit(rowIndex, 'name', e.target.value);
+      const remove = () => handleRemove(rowIndex);
 
       return (
         <span>
           <input type="text" value={mail} onChange={changeMail} />
           <input type="text" value={name} onChange={changeName} />
+          { !isEmpty && <button onClick={remove}>Remove</button> }
         </span>
       )
     }
@@ -44,7 +46,9 @@ class Player extends Component {
 Player.propTypes = {
   isActive: PropTypes.bool,
   isEditable: PropTypes.bool,
+  isEmpty: PropTypes.bool,
   handleEdit: PropTypes.func,
+  handleRemove: PropTypes.func,
   mail: PropTypes.string.isRequired,
   name: PropTypes.string,
   rowIndex: PropTypes.number,

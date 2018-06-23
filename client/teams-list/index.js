@@ -3,10 +3,6 @@ import { Link, Router } from "@reach/router"
 
 import Player from '../player';
 
-// const List = ({ games }) => {
-// 	return games.map(game => <GameButton key={game._id} id={game._id} {...game} />);
-// };
-
 const List = () => {
 	return (
 		<div>
@@ -20,19 +16,21 @@ class NewTeam extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.state = { rows: [{}] }
+		this.state = { rows: [{ isEmpty: true }], teamName: '' }
 
 		this.createTeam = this.createTeam.bind(this);
 		this.handleChangeAttribute = this.handleChangeAttribute.bind(this);
+		this.handleChangeTeamName = this.handleChangeTeamName.bind(this);
+		this.handleRemovePlayer = this.handleRemovePlayer.bind(this);
 	}
 
 	handleChangeAttribute(rowIndex, attribute, newValue) {
 	    const { rows } = this.state;
-	    const last = rows[rowIndex];
+	    const current = rows[rowIndex];
 	    
-	    if (Object.keys(last).length === 0) {
-	    	const row = { [attribute]: newValue };
-	      	return this.setState({ rows: [...rows.slice(0, rowIndex), row, {}] });
+	    if (current.isEmpty) {
+	    	const row = { ...current, [attribute]: newValue, isEmpty: false };
+	      	return this.setState({ rows: [...rows.slice(0, rowIndex), row, { isEmpty: true }] });
 	    }
 
 	    const row = { ...rows[rowIndex], [attribute]: newValue };
@@ -42,22 +40,46 @@ class NewTeam extends React.Component {
 	    });
 	}
 
+	handleRemovePlayer(rowIndex) {
+		const { rows } = this.state;
+
+		if (rows.length === 1) {
+			return this.setState({ rows: [{ isEmpty: true }] });
+		}
+
+	    this.setState({
+	      rows: [...rows.slice(0, rowIndex), ...rows.slice(rowIndex + 1)]
+	    });
+	}
+
+	handleChangeTeamName(e) {
+		this.setState({ teamName: e.target.value });
+	}
+
 	createTeam() {
 		const { rows } = this.state;
-		const filteredRows = rows.filter(row => Object.keys(row).length > 0);
+		const filteredRows = rows.filter(row => !row.isEmpty);
+		const mappedRows = filteredRows.map(({ name, mail }) => ({ name ,mail }));
 
-		console.log(rows, filteredRows);
+		console.log(rows, mappedRows);
 	}
 
 	render() {
 		return (
 			<div>
+				<input 
+					type="text" 
+					placeholder="Team name" 
+					value={this.state.teamName}
+					onChange={this.handleChangeTeamName}
+				/>
 				{ this.state.rows.map((player, index) => {
 					return <Player 
 					key={index} 
 					rowIndex={index} 
 					isEditable={true}
 					handleEdit={this.handleChangeAttribute}
+					handleRemove={this.handleRemovePlayer}
 					{...player} />;
 				}) }
 				<button onClick={this.createTeam}>Create</button>
