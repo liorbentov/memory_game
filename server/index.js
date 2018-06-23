@@ -15,25 +15,27 @@ app.use(express.static(path.resolve(__dirname, '../dist')));
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
-app.use(webpackDevMiddleware(compiler, {
-  hot: true,
-  filename: 'bundle.js',
-  publicPath: '/',
-  stats: {
-    colors: true,
-  },
-  historyApiFallback: true,
-}));
+app.use(
+  webpackDevMiddleware(compiler, {
+    hot: true,
+    filename: 'bundle.js',
+    publicPath: '/',
+    stats: {
+      colors: true,
+    },
+    historyApiFallback: true,
+  })
+);
 
 let matrix;
 
 app.get('/api/games/:id/start', function(req, res) {
-    const { id } = req.params;
-    db.getGameItems(id).then(values => {
-      const { items } = values;
-      matrix = logic.buildMatrix(items.length);
-      res.send(logic.getBoardDimentions(items.length));
-    });
+  const { id } = req.params;
+  db.getGameItems(id).then(values => {
+    const { items } = values;
+    matrix = logic.buildMatrix(items.length);
+    res.send(logic.getBoardDimentions(items.length));
+  });
 });
 
 app.get('/api/games', (req, res) => {
@@ -53,12 +55,17 @@ app.get('/api/games/:id/items', (req, res) => {
 app.post('/api/games/:id/item', (req, res) => {
   const { row, column } = req.body;
   const itemIndex = matrix[row][column];
-  
+
   const { id } = req.params;
   db.getGameItems(id).then(values => {
     const item = values.items[itemIndex];
     res.send(item);
   });
+});
+
+app.post('/api/teams', (req, res) => {
+  const {name, members} = req.body;
+  db.createTeam({ name, members }).then(result => res.send(result));
 });
 
 app.get('*', (req, res) => {

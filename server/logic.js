@@ -1,38 +1,38 @@
 const getPlaceIndexes = (place, dimentions) => {
   const row = Math.floor(place / dimentions.y);
-  const col = place - (row * dimentions.y);
+  const col = place - row * dimentions.y;
 
   return { row, col };
 };
 
 const pickPlace = places => {
   return Math.floor(Math.random() * places);
-}
+};
 
 const isOpenPlace = (matrix, place, dimentions) => {
   const { row, col } = getPlaceIndexes(place, dimentions);
   return matrix[row][col] === undefined;
-}
+};
 
 const putItemInPlace = (matrix, item, dimentions) => {
-    const places = dimentions.x * dimentions.y;
-    let firstPlace = pickPlace(places);
-    while (!isOpenPlace(matrix, firstPlace, dimentions)) {
-      firstPlace = pickPlace(places);
-    }
+  const places = dimentions.x * dimentions.y;
+  let firstPlace = pickPlace(places);
+  while (!isOpenPlace(matrix, firstPlace, dimentions)) {
+    firstPlace = pickPlace(places);
+  }
 
-    const { row, col } = getPlaceIndexes(firstPlace, dimentions);
-    matrix[row][col] = item;
+  const { row, col } = getPlaceIndexes(firstPlace, dimentions);
+  matrix[row][col] = item;
 };
 
 const initializeMatrix = (rows, columns) => {
   const matrix = new Array(rows);
   for (let rowIndex = 0; rowIndex < rows; rowIndex++) {
-      matrix[rowIndex] = new Array(columns);
+    matrix[rowIndex] = new Array(columns);
   }
 
   return matrix;
-}
+};
 
 const buildMatrix = itemsNumber => {
   let remainingPlaces = itemsNumber * 2;
@@ -55,7 +55,7 @@ const getDividers = num => {
   for (let index = 3; index < rightDivider; index++) {
     if (mul % index === 0) {
       rightDivider = mul / index;
-      dividers.push({ x: index, y: rightDivider })
+      dividers.push({ x: index, y: rightDivider });
     }
   }
 
@@ -70,10 +70,10 @@ const getBoardDimentions = num => {
   }
 
   const closestDividers = dividers[dividers.length - 1];
-  return ({...closestDividers});
+  return { ...closestDividers };
 };
 
 module.exports = {
   buildMatrix,
-  getBoardDimentions
+  getBoardDimentions,
 };

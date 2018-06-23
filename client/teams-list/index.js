@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Router } from '@reach/router';
 
 import Player from '../player';
+import NewTeam from '../new-team'
 
 const List = () => {
   return (
@@ -11,78 +12,6 @@ const List = () => {
     </div>
   );
 };
-
-class NewTeam extends React.Component {
-  state = { rows: [{ isEmpty: true }], teamName: '' };
-
-  handleChangeAttribute = (rowIndex, attribute, newValue) => {
-    const { rows } = this.state;
-    const current = rows[rowIndex];
-
-    if (current.isEmpty) {
-      const row = { ...current, [attribute]: newValue, isEmpty: false };
-      return this.setState({
-        rows: [...rows.slice(0, rowIndex), row, { isEmpty: true }],
-      });
-    }
-
-    const row = { ...rows[rowIndex], [attribute]: newValue };
-
-    this.setState({
-      rows: [...rows.slice(0, rowIndex), row, ...rows.slice(rowIndex + 1)],
-    });
-  };
-
-  handleRemovePlayer = rowIndex => {
-    const { rows } = this.state;
-
-    if (rows.length === 1) {
-      return this.setState({ rows: [{ isEmpty: true }] });
-    }
-
-    this.setState({
-      rows: [...rows.slice(0, rowIndex), ...rows.slice(rowIndex + 1)],
-    });
-  };
-
-  handleChangeTeamName = e => {
-    this.setState({ teamName: e.target.value });
-  };
-
-  createTeam = () => {
-    const { rows } = this.state;
-    const filteredRows = rows.filter(row => !row.isEmpty);
-    const mappedRows = filteredRows.map(({ name, mail }) => ({ name, mail }));
-
-    console.log(rows, mappedRows);
-  };
-
-  render() {
-    return (
-      <div>
-        <input
-          type="text"
-          placeholder="Team name"
-          value={this.state.teamName}
-          onChange={this.handleChangeTeamName}
-        />
-        {this.state.rows.map((player, index) => {
-          return (
-            <Player
-              key={index}
-              rowIndex={index}
-              isEditable={true}
-              handleEdit={this.handleChangeAttribute}
-              handleRemove={this.handleRemovePlayer}
-              {...player}
-            />
-          );
-        })}
-        <button onClick={this.createTeam}>Create</button>
-      </div>
-    );
-  }
-}
 
 const Team = ({ id }) => {
   return <div>{id}</div>;
