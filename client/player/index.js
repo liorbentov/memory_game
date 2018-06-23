@@ -21,19 +21,34 @@ class Player extends Component {
       const remove = () => handleRemove(rowIndex);
 
       return (
-        <span>
-          <input type="text" value={mail} onChange={changeMail} />
-          <input type="text" value={name} onChange={changeName} />
-          {!isEmpty && <button onClick={remove}>Remove</button>}
+        <span className={classNames(Styles.inputContainer)}>
+          <input 
+            className={classNames(Styles.playerInput)} 
+            onChange={changeMail} 
+            placeholder="Enter mail"
+            type="text" 
+            value={mail} 
+          />
+          <input 
+            className={classNames(Styles.playerInput)} 
+            onChange={changeName} 
+            placeholder="Enter name"
+            type="text" 
+            value={name} 
+          />
+          {!isEmpty && <button 
+            className={classNames(Styles.removeButton)}
+            onClick={remove}
+          >Remove</button>}
         </span>
       );
     }
 
     const { results, name, mail } = this.props;
     return (
-      <span>
+      <span className={classNames(Styles.playingContainer)}>
         <span>{name || mail}</span>
-        {results && (
+        {!!results && (
           <span className={classNames(Styles.results)}>({results})</span>
         )}
       </span>
@@ -41,12 +56,13 @@ class Player extends Component {
   }
 
   render() {
-    const { isActive, name, mail, results } = this.props;
+    const { isActive, name, mail, results, isEditable } = this.props;
 
     return (
       <div
         className={classNames(Styles['player-container'], {
           [Styles.activePlayer]: isActive,
+          [Styles.isEditing]: isEditable
         })}
       >
         <Gravatar

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 
 import Player from '../player';
+import Styles from './style.css';
 
 class NewTeam extends Component {
   state = { rows: [{ isEmpty: true }], teamName: '', isCreating: false };
@@ -72,7 +74,7 @@ class NewTeam extends Component {
     const filteredRows = rows.filter(row => !row.isEmpty);
 
     if (!filteredRows.length) {
-      return window.alert('You must enter somw team members!');
+      return window.alert('You must enter some team members!');
     }
 
     const mappedRows = filteredRows.map(({ name, mail }) => ({ name, mail }));
@@ -82,13 +84,16 @@ class NewTeam extends Component {
 
   render() {
     return (
-      <div>
-        <input
-          type="text"
-          placeholder="Team name"
-          value={this.state.teamName}
-          onChange={this.handleChangeTeamName}
-        />
+      <div className={classNames(Styles.newTeamContainer)}>
+        <div>
+          <h4>Team name:</h4>
+          <input
+            type="text"
+            placeholder="Team name"
+            value={this.state.teamName}
+            onChange={this.handleChangeTeamName}
+          />
+        </div>
         {this.state.rows.map((player, index) => {
           return (
             <Player
