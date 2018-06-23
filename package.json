@@ -7,7 +7,8 @@
     "compile": "webpack",
     "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "prettier": "prettier --single-quote --trailing-comma es5 --write './client/**/*.js'"
   },
   "repository": {
     "type": "git",
@@ -38,11 +39,12 @@
   "devDependencies": {
     "babel-core": "6.26.3",
     "babel-loader": "7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "webpack-cli": "3.0.8",
+    "prettier": "1.13.5",
     "webpack": "4.12.0",
+    "webpack-cli": "3.0.8",
     "webpack-dev-middleware": "3.1.3"
   }
 }
