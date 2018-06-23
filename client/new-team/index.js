@@ -54,7 +54,7 @@ class NewTeam extends Component {
       .then(data => data.json())
       .then(data => {
         this.setState({ isCreating: false })
-        console.log(data._id)
+        this.props.navigate(`/teams/${data._id}`)
       })
       .catch(() => {
         this.setState({ isCreating: false })
@@ -81,6 +81,7 @@ class NewTeam extends Component {
   };
 
   render() {
+    console.log(this.props);
     return (
       <div>
         <input
@@ -102,6 +103,7 @@ class NewTeam extends Component {
           );
         })}
         <button onClick={this.createTeam}>Create</button>
+        { this.state.isCreating && "Creating" }
       </div>
     );
   }
